@@ -1,21 +1,21 @@
-create table parcel (
-    parcel_id smallint unsigned primary key,
-	owner_id smallint unsigned,
-    foreign key(owner_id) references owner_parcel(owner_id),
-    zipcode smallint unsigned,
-    rental boolean,
-    census_tracts numeric(10,1)
+CREATE TABLE parcel (
+  parcel_id SMALLINT UNSIGNED PRIMARY KEY,
+  wner_id SMALLINT UNSIGNED,
+  FOREIGN KEY(owner_id) REFERENCES owner_parcel(owner_id),
+  zipcode SMALLINT UNSIGNED,
+  rental BOOLEAN,
+  census_tracts NUMERIC(10,1)
 );
 
-create table owner_parcel (
-	 owner_id smallint unsigned primary key,
-	 owner_zipcode smallint unsigned
+CREATE TABLE owner_parcel (
+	owner_id SMALLINT UNSIGNED PRIMARY KEY,
+	owner_zipcode SMALLINT UNSIGNED
 );
 
-create table violation (
-	 id smallint unsigned primary key,
-     parcel_id varchar(20),
-     foreign key(parcel_id) references parcel(parcel_id),
-     violation_code smallint unsigned,
-     violation_id smallint unsigned
+CREATE TABLE violation (
+  id SMALLINT UNSIGNED PRIMARY KEY,
+  parcel_id VARCHAR(20),
+  FOREIGN KEY(parcel_id) REFERENCES parcel(parcel_id),
+  violation_code SMALLINT UNSIGNED,
+  violation_id SMALLINT UNSIGNED
 );
