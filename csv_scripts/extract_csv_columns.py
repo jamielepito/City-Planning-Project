@@ -125,5 +125,7 @@ if __name__ == '__main__':
                    '/Users/cameronkuchta/Documents/GitHub/City-Planning-Project/csv_files/owner_db.csv']
     select_types = [violation_select, parcel_select, owner_select]
 
+    os.remove(error_file)
+
     for i in range(len(select_types)):
         extract_cols(read_files[i], write_files[i], select_types[i], show_progress=True)
