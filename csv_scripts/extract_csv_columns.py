@@ -23,7 +23,6 @@ def extract_cols(read_file, write_file, select_info, rows_per_write=1000, show_p
         while not end:
             if show_progress:
                 print("Done with " + str(index * rows_per_write) + " rows.")
-            index += 1
 
             rows = []
             for i in range(rows_per_write):
@@ -44,6 +43,7 @@ def extract_cols(read_file, write_file, select_info, rows_per_write=1000, show_p
                 mode = 'a'
 
             write_csv(write_file, rows, write_type=mode)
+            index += 1
 
 
 def violation_select(row, first):
@@ -83,7 +83,7 @@ def owner_select(row, first):
         rows_to_append.append(['owner_id', 'owner_zipcode'])
 
     else:
-        cols_to_keep = [9, 10]
+        cols_to_keep = [9, 12]
         if valid_row(row, cols_to_keep, 'property'):
             full_row = create_row_entry(row, cols_to_keep)
             # Since owner zipcode is coming from a full address, we need to get the numbers out by stripping, splitting,
