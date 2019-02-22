@@ -15,8 +15,9 @@ import os
 
 def extract_cols(read_file, write_file, select_info, rows_per_write=1000, show_progress=False):
     end = False
-    with open(read_file, "r") as csvfile:
-        datareader = csv.reader(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
+    with open(read_file, "r", errors='replace') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',',
+                                quotechar='|', quoting=csv.QUOTE_ALL)
 
         index = 0
         first = True
@@ -97,13 +98,15 @@ def owner_select(row, first, row_number):
     else:
         cols_to_keep = [9, 12]
         alt_cols_to_keep = [9, 13]
-        if valid_row(row, cols_to_keep, 'property', 'owner', row_number) and row[cols_to_keep[1]].isdigit():
+        if valid_row(row, cols_to_keep, 'property', 'owner', row_number) \
+                and extract_zipcode([0, row[cols_to_keep[1]]]).isdigit():
             full_row = create_row_entry(row, cols_to_keep)
             zipcode = extract_zipcode(full_row)
 
             full_row[1] = zipcode
             rows_to_append.append(full_row)
-        elif valid_row(row, alt_cols_to_keep, 'property', 'owner', row_number) and row[alt_cols_to_keep[1]].isdigit():
+        elif valid_row(row, alt_cols_to_keep, 'property', 'owner', row_number) \
+                and extract_zipcode([0, row[alt_cols_to_keep[1]]]).isdigit():
             full_row = create_row_entry(row, alt_cols_to_keep)
             zipcode = extract_zipcode(full_row)
 
@@ -140,15 +143,16 @@ def create_row_entry(row, cols):
 
 
 if __name__ == '__main__':
-    read_files = ['/Users/cameronkuchta/Desktop/Academics/database_capstone/city_project/csv_files/violations_new.csv',
-                  '/Users/cameronkuchta/Desktop/Academics/database_capstone/city_project/csv_files/properties_new.csv',
-                  '/Users/cameronkuchta/Desktop/Academics/database_capstone/city_project/csv_files/properties_new.csv']
+    read_files = ['/Users/cameronkuchta/Desktop/Academics/database_capstone/city_project/csv_files/violations_bar.csv',
+                  '/Users/cameronkuchta/Desktop/Academics/database_capstone/city_project/csv_files/properties_bar.csv',
+                  '/Users/cameronkuchta/Desktop/Academics/database_capstone/city_project/csv_files/properties_bar.csv']
     write_files = ['/Users/cameronkuchta/Documents/GitHub/City-Planning-Project/csv_files/violations_db.csv',
                    '/Users/cameronkuchta/Documents/GitHub/City-Planning-Project/csv_files/parcel_db.csv',
                    '/Users/cameronkuchta/Documents/GitHub/City-Planning-Project/csv_files/owner_db.csv']
     select_types = [violation_select, parcel_select, owner_select]
 
-    os.remove(error_file)
+    if os.path.isfile(error_file):
+        os.remove(error_file)
 
     for i in range(len(select_types)):
         extract_cols(read_files[i], write_files[i], select_types[i], show_progress=True)
