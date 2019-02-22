@@ -1,8 +1,9 @@
-'This file is a macro for excel to transform the given excel document into a csv document separated by ","
-'(with double quotations). Create a module for your sheet and put this code into it.
+'This file is a macro for excel to transform the given excel document into a csv document separated by |,|.
+'This is used since some entries have double quotations already. Create a module for your sheet and put this code into it.
 'Then after selecting all of the data, run the macro. This is from https://support.microsoft.com/en-us/help/291296/procedure-to-export-a-text-file-with-both-comma-and-quote-delimiters-i
+'We changed the given code from entering " to entering |.
 
-Sub QuoteCommaExport()
+Sub BarCommaExport()
    ' Dimension all variables.
    Dim DestFile As String
    Dim FileNum As Integer
@@ -11,7 +12,7 @@ Sub QuoteCommaExport()
 
    ' Prompt user for destination file name.
    DestFile = InputBox("Enter the destination filename" _
-      & Chr(10) & "(with complete path):", "Quote-Comma Exporter")
+      & Chr(10) & "(with complete path):", "Bar-Comma Exporter")
 
    ' Obtain next free file handle number.
    FileNum = FreeFile()
@@ -37,9 +38,9 @@ Sub QuoteCommaExport()
       ' Loop for each column in selection.
       For ColumnCount = 1 To Selection.Columns.Count
 
-         ' Write current cell's text to file with quotation marks.
-         Print #FileNum, """" & Selection.Cells(RowCount, _
-            ColumnCount).Text & """";
+         ' Write current cell's text to file with bars.
+         Print #FileNum, "|" & Selection.Cells(RowCount, _
+            ColumnCount).Text & "|";
 
          ' Check if cell is in last column.
          If ColumnCount = Selection.Columns.Count Then
