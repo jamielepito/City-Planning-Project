@@ -1,0 +1,9 @@
+USE city_project;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE if EXISTS owner_parcel;
+DROP TABLE if EXISTS parcel;
+DROP TABLE if EXISTS violation;
+
+SET FOREIGN_KEY_CHECKS = 1;
