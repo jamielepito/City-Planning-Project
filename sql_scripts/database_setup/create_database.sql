@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS parcel (
   FOREIGN KEY(owner_id) REFERENCES owner_parcel(owner_id),
   zipcode SMALLINT UNSIGNED,
   rental BOOLEAN,
-  census_tracts NUMERIC(10,1)
+  census_tract NUMERIC(5,1)
 );
 
 CREATE TABLE IF NOT EXISTS violation (
