@@ -42,7 +42,7 @@ INTO TABLE parcel
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(parcel_id, owner_id, zipcode, @is_rental, census_tracts)
+(parcel_id, owner_id, zipcode, @is_rental, census_tract)
 SET rental = IF(@is_rental = 'Y', TRUE, FALSE);
 
 LOAD DATA LOCAL INFILE "/Users/cameronkuchta/Documents/GitHub/City-Planning-Project/csv_files/violations_db.csv"

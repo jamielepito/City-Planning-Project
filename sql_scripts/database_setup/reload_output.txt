@@ -14,7 +14,6 @@ DROP TABLE if EXISTS parcel
 DROP TABLE if EXISTS violation
 --------------
 
-Note (Code 1051): Unknown table 'city_project.violation'
 --------------
 SET FOREIGN_KEY_CHECKS = 1
 --------------
@@ -38,7 +37,7 @@ CREATE TABLE IF NOT EXISTS parcel (
   FOREIGN KEY(owner_id) REFERENCES owner_parcel(owner_id),
   zipcode SMALLINT UNSIGNED,
   rental BOOLEAN,
-  census_tracts NUMERIC(10,1)
+  census_tract NUMERIC(5,1)
 )
 --------------
 
@@ -1089,7 +1088,7 @@ INTO TABLE parcel
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(parcel_id, owner_id, zipcode, @is_rental, census_tracts)
+(parcel_id, owner_id, zipcode, @is_rental, census_tract)
 SET rental = IF(@is_rental = 'Y', TRUE, FALSE)
 --------------
 
